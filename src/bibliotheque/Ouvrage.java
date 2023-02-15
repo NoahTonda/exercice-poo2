@@ -98,13 +98,7 @@ public abstract class Ouvrage {
     public void setLex(List<Exemplaire> lex) {
         this.lex = lex;
     }
-    public void addOuvrage(Auteur auteur, Ouvrage ouvrage){
-        auteur.getLouvrage().add(ouvrage);
-        ouvrage.getLauteurs().add(auteur);
-    }
-    public void suppOuvrage(Livre livre, Auteur auteur){
-        livre.getLauteurs().remove(auteur);
-    }
+
     @Override
     public String toString() {
         return "Ouvrage{" +

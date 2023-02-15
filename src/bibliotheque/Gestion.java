@@ -6,7 +6,7 @@ public class Gestion {
     public static void main(String[] args) {
         Auteur auteur=new Auteur("Oda","Echiro","Japonais");
         Livre livre=new Livre("One piece Tome 1",10, LocalDate.of(1997,12,24),10,"Français","Manga","FR 978-2-7654-0912-0",208,TypeLivre.ROMAN,"L'histoire d'un jeune homme nommé Luffy qui veut devenir le roi des pirates");
-        livre.addOuvrage(auteur, livre);
+        addOuvrage(auteur, livre);
         Rayon rayon=new Rayon("M1","Manga");
         Exemplaire exemplaire=new Exemplaire("1","un peu usagé",livre);
         rayon.getLex().add(exemplaire);
@@ -17,7 +17,7 @@ public class Gestion {
         exemplaire.getLloc().add(location);
         System.out.println(auteur);
         System.out.println(livre);
-        livre.suppOuvrage(livre,auteur);
+        suppOuvrage(auteur,livre);
         System.out.println(livre);
         System.out.println(rayon);
         System.out.println(exemplaire);
@@ -25,6 +25,12 @@ public class Gestion {
         System.out.println(location);
 
     }
-
+    public static void addOuvrage(Auteur auteur, Ouvrage ouvrage){
+        auteur.getLouvrage().add(ouvrage);
+        ouvrage.getLauteurs().add(auteur);
+    }
+    public static void suppOuvrage(Auteur auteur,Ouvrage ouvrage){
+        ouvrage.getLauteurs().remove(auteur);
+    }
 
 }
