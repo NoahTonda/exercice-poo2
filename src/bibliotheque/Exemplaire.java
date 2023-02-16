@@ -21,7 +21,35 @@ public class Exemplaire {
         this.ouvrage = ouvrage;
         this.ouvrage.getLex().add(this);
     }
-
+    public void modifierEtat(String etat){
+        //TODO coder méthode modifier etat
+    }
+    public Lecteur lecteurActuel(){
+        //TODO coder méthode lecteurActuel
+        return null;
+    }
+    public List<Lecteur> lecteurs(){
+        // TODO: 16/02/2023 lecteurs
+        return null;
+    }
+    public void envoiMailLecteurActuel(Mail mail){
+        // TODO: 16/02/2023  envoiMailLecteurActuel
+    }
+    public void envoiMailLecteurs(Mail mail){
+        // TODO: 16/02/2023  envoiMailLecteurs
+    }
+    public boolean enRetard(){
+        // TODO: 16/02/2023 enRetard
+        return true;
+    }
+    public int joursRetard(){
+        // TODO: 16/02/2023 joursRetard
+        return 0;
+    }
+    public boolean enLocation(){
+        // TODO: 16/02/2023 enLocation
+        return true;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

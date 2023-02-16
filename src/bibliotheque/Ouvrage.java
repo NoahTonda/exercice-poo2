@@ -1,5 +1,6 @@
 package bibliotheque;
 
+import java.sql.ClientInfoStatus;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,16 @@ public abstract class Ouvrage {
         this.langue = langue;
         this.genre = genre;
     }
+    public void listerExemplaire(){
+        // TODO: 16/02/2023 coder la methode listerExemplaire
+    }
+    public void listerExemplaire(boolean enLocation){
+        // TODO: 16/02/2023 coder la methode listerExemplaire
+    }
+
+    public abstract double amendeRetard();
+
+    public abstract double amendeRetard(int jours);
 
     public String getTitre() {
         return titre;

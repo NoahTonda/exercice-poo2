@@ -24,7 +24,13 @@ public class Lecteur {
         this.mail = mail;
         this.tel = tel;
     }
+    public void listerExemplaireEnLocation(){
+        // TODO: 16/02/2023  listerExemplaireEnLocation
+    }
+    public void listerExemplairesLoues(){
+        // TODO: 16/02/2023  listerExemplairesLoues
 
+    }
     public int getNumlecteur() {
         return numlecteur;
     }

@@ -13,7 +13,10 @@ public class Rayon {
         this.codeRayon = codeRayon;
         this.genre = genre;
     }
-
+    public void addExemplaire(Exemplaire e){
+        e.setRayon(this);
+        this.getLex().add(e);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

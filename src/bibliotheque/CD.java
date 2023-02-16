@@ -14,7 +14,11 @@ public class CD extends Ouvrage{
         this.nbrePlages=nbrePlages;
         this.dureeTotale=dureeTotale;
     }
-
+    @Override
+    public double amendeRetard(){
+        // TODO: 16/02/2023 amendeRetard
+        return 0;
+    }
     public long getCode() {
         return code;
     }
@@ -50,6 +54,11 @@ public class CD extends Ouvrage{
     @Override
     public int hashCode() {
         return Objects.hash(code);
+    }
+
+    @Override
+    public double amendeRetard(int jours) {
+        return 0;
     }
 
     @Override

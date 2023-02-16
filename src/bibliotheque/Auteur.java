@@ -14,7 +14,22 @@ public class Auteur {
         this.prenom = prenom;
         this.nationalite = nationalite;
     }
-
+    public void addOuvrage(Ouvrage ouvrage){
+        this.getLouvrage().add(ouvrage);
+        ouvrage.getLauteurs().add(this);
+    }
+    public void suppOuvrage(Ouvrage ouvrage){
+        ouvrage.getLauteurs().remove(this);
+    }
+    public void listerOuvrages(){
+        // TODO: 16/02/2023 coder la methode listerOuvrages
+    }
+    public void listerOuvrages(TypeOuvrage to,TypeLivre tl){
+        // TODO: 16/02/2023 coder la methode listerOuvrages
+    }
+    public void listerOuvrages(Ouvrage o){
+    // TODO: 16/02/2023 coder la methode listerOuvrages et mettre genre en parametre a la place de Ouvrage
+    }
     public String getNom() {
         return nom;
     }

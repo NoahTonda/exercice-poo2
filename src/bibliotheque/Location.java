@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Location {
     private LocalDate dateLocation;
     private LocalDate dateRestitution;
+    private double amende;
     private Lecteur loueur;
     private Exemplaire exemplaire;
 
@@ -14,13 +15,21 @@ public class Location {
         this.dateRestitution = dateRestitution;
         this.loueur = loueur;
         this.exemplaire = exemplaire;
+        loueur.getLloc().add(this);
+        exemplaire.getLloc().add(this);
     }
 
     public Location(Lecteur loueur, Exemplaire exemplaire) {
         this.loueur = loueur;
         this.exemplaire = exemplaire;
     }
-
+    public double calculerAmende(){
+        // TODO: 16/02/2023 calculerAmende
+        return 0;
+    }
+    public void enregistrerRetour(){
+        // TODO: 16/02/2023 enregistrerRetour
+    }
     public LocalDate getDateLocation() {
         return dateLocation;
     }

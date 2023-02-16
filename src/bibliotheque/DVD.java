@@ -18,7 +18,10 @@ public class DVD extends Ouvrage{
        this.dureeTotale=dureeTotale;
        this.nbreBonus=nbreBonus;
     }
-
+    public double amendeRetard(){
+        // TODO: 16/02/2023 amendeRetard
+        return 0;
+    }
     public long getCode() {
         return code;
     }
@@ -70,6 +73,11 @@ public class DVD extends Ouvrage{
     @Override
     public int hashCode() {
         return Objects.hash(code);
+    }
+
+    @Override
+    public double amendeRetard(int jours) {
+        return 0;
     }
 
     @Override

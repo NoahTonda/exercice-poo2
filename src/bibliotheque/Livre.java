@@ -17,7 +17,10 @@ public class Livre extends Ouvrage{
         this.tl=tl;
         this.resume=resume;
     }
-
+    public double amendeRetard(int jours){
+        // TODO: 16/02/2023 amendeRetard
+        return 0;
+    }
     public String getIsbn() {
         return isbn;
     }
