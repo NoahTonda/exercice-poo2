@@ -1,4 +1,4 @@
-package bibliotheque;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,13 +24,7 @@ public class Lecteur {
         this.mail = mail;
         this.tel = tel;
     }
-    public void listerExemplaireEnLocation(){
-        // TODO: 16/02/2023  listerExemplaireEnLocation
-    }
-    public void listerExemplairesLoues(){
-        // TODO: 16/02/2023  listerExemplairesLoues
 
-    }
     public int getNumlecteur() {
         return numlecteur;
     }
@@ -120,4 +114,31 @@ public class Lecteur {
     public int hashCode() {
         return Objects.hash(numlecteur);
     }
+
+    public List<Exemplaire> listerExemplairesEnLocation(){
+        List<Exemplaire> lex = new ArrayList<>();
+        for(Location loc : lloc){
+            if(loc.getDateRestitution()!=null)lex.add(loc.getExemplaire());
+        }
+        return lex;
+    }
+
+    public List<Exemplaire> listerExemplairesLoues(){
+        List<Exemplaire> lex = new ArrayList<>();
+        for(Location loc : lloc){
+            boolean flag=false;
+            for (int i=0;i<lex.size();i++){
+                for (int j=0;j<lex.get(i).getLloc().size();j++){
+                    if (lex.get(i).getLloc().get(j).getLoueur().equals(loc.getLoueur())){
+                        flag=true;
+                    }
+                }
+            }
+            if(!flag){
+                lex.add(loc.getExemplaire());
+            }
+        }
+       return lex;
+    }
+
 }

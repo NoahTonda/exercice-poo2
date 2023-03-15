@@ -1,12 +1,12 @@
-package bibliotheque;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class Location {
     private LocalDate dateLocation;
     private LocalDate dateRestitution;
-    private double amende;
     private Lecteur loueur;
     private Exemplaire exemplaire;
 
@@ -15,21 +15,18 @@ public class Location {
         this.dateRestitution = dateRestitution;
         this.loueur = loueur;
         this.exemplaire = exemplaire;
-        loueur.getLloc().add(this);
-        exemplaire.getLloc().add(this);
+        this.loueur.getLloc().add(this);
+        this.exemplaire.getLloc().add(this);
     }
 
     public Location(Lecteur loueur, Exemplaire exemplaire) {
         this.loueur = loueur;
         this.exemplaire = exemplaire;
+        this.dateLocation=LocalDate.now();
+        this.loueur.getLloc().add(this);
+        this.exemplaire.getLloc().add(this);
     }
-    public double calculerAmende(){
-        // TODO: 16/02/2023 calculerAmende
-        return 0;
-    }
-    public void enregistrerRetour(){
-        // TODO: 16/02/2023 enregistrerRetour
-    }
+
     public LocalDate getDateLocation() {
         return dateLocation;
     }
@@ -83,5 +80,20 @@ public class Location {
                 ", loueur=" + loueur +
                 ", exemplaire=" + exemplaire +
                 '}';
+    }
+
+    public double calculerAmende(){
+         if(dateRestitution!=null){
+           LocalDate dateLim = dateLocation.plusDays(exemplaire.getOuvrage().njlocmax());
+           if(dateRestitution.isAfter(dateLim)){
+               int njretard = (int)ChronoUnit.DAYS.between(dateLim, dateRestitution);
+               return exemplaire.getOuvrage().amendeRetard(njretard);
+           }
+       }
+        return 0;
+    }
+
+    public void enregistrerRetour(){
+       if(dateRestitution==null) dateRestitution=LocalDate.now();//test sur nul pour éviter d'enregistrer retour 2 fois
     }
 }

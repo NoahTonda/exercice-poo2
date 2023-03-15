@@ -1,4 +1,4 @@
-package bibliotheque;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -17,10 +17,7 @@ public class Livre extends Ouvrage{
         this.tl=tl;
         this.resume=resume;
     }
-    public double amendeRetard(int jours){
-        // TODO: 16/02/2023 amendeRetard
-        return 0;
-    }
+
     public String getIsbn() {
         return isbn;
     }
@@ -67,12 +64,23 @@ public class Livre extends Ouvrage{
     }
 
     @Override
+    public double amendeRetard(int njours) {
+
+        return njours*0.25;
+    }
+
+    @Override
+    public int njlocmax() {
+        return 15;
+    }
+
+    @Override
     public String toString() {
         return super.toString()+ "Livre{" +
                 "isbn='" + isbn + '\'' +
                 ", nbrePages=" + nbrePages +
                 ", tl=" + tl +
                 ", resume='" + resume + '\'' +
-                "} " + super.toString();
+                "} " ;
     }
 }

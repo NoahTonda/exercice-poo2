@@ -1,24 +1,21 @@
-package bibliotheque;
+package bibliotheque.metier;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 
 public class CD extends Ouvrage{
     private long code;
     private byte nbrePlages;
-    private String dureeTotale;
+    private LocalTime dureeTotale;
 
-    public CD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, byte nbrePlages, String dureeTotale) {
+    public CD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, byte nbrePlages, LocalTime dureeTotale) {
         super(titre, ageMin, dateParution, TypeOuvrage.CD, prixLocation, langue, genre);
         this.code=code;
         this.nbrePlages=nbrePlages;
         this.dureeTotale=dureeTotale;
     }
-    @Override
-    public double amendeRetard(){
-        // TODO: 16/02/2023 amendeRetard
-        return 0;
-    }
+
     public long getCode() {
         return code;
     }
@@ -35,11 +32,11 @@ public class CD extends Ouvrage{
         this.nbrePlages = nbrePlages;
     }
 
-    public String getDureeTotale() {
+    public LocalTime getDureeTotale() {
         return dureeTotale;
     }
 
-    public void setDureeTotale(String dureeTotale) {
+    public void setDureeTotale(LocalTime dureeTotale) {
         this.dureeTotale = dureeTotale;
     }
 
@@ -55,10 +52,15 @@ public class CD extends Ouvrage{
     public int hashCode() {
         return Objects.hash(code);
     }
+    @Override
+    public double amendeRetard(int njours) {
+
+        return njours*0.50;
+    }
 
     @Override
-    public double amendeRetard(int jours) {
-        return 0;
+    public int njlocmax() {
+        return 7;
     }
 
     @Override
@@ -67,6 +69,6 @@ public class CD extends Ouvrage{
                 "code=" + code +
                 ", nbrePlages=" + nbrePlages +
                 ", dureeTotale='" + dureeTotale + '\'' +
-                "} " + super.toString();
+                "} " ;
     }
 }

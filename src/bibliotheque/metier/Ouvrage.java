@@ -1,6 +1,5 @@
-package bibliotheque;
+package bibliotheque.metier;
 
-import java.sql.ClientInfoStatus;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +26,6 @@ public abstract class Ouvrage {
         this.langue = langue;
         this.genre = genre;
     }
-    public void listerExemplaire(){
-        // TODO: 16/02/2023 coder la methode listerExemplaire
-    }
-    public void listerExemplaire(boolean enLocation){
-        // TODO: 16/02/2023 coder la methode listerExemplaire
-    }
-
-    public abstract double amendeRetard();
-
-    public abstract double amendeRetard(int jours);
 
     public String getTitre() {
         return titre;
@@ -110,6 +99,11 @@ public abstract class Ouvrage {
         this.lex = lex;
     }
 
+
+    public abstract double amendeRetard(int njours);
+
+    public abstract int njlocmax();
+
     @Override
     public String toString() {
         return "Ouvrage{" +
@@ -120,7 +114,35 @@ public abstract class Ouvrage {
                 ", prixLocation=" + prixLocation +
                 ", langue='" + langue + '\'' +
                 ", genre='" + genre + '\'' +
-                ", lauteurs=" + lauteurs +
                 '}';
+    }
+    public void addAuteur(Auteur a ){
+        lauteurs.add(a);
+        a.getLouvrage().add(this);
+    }
+
+    public void remove(Auteur a){
+        lauteurs.remove(a);
+        a.getLouvrage().remove(this);
+    }
+    public void addExemplaire(Exemplaire e){
+        lex.add(e);
+        e.setOuvrage(this);
+    }
+
+    public void remove(Exemplaire e){
+        lex.remove(e);
+        e.setOuvrage(null);
+    }
+    public List<Exemplaire>listerExemplaires(){
+        return lex;
+    }
+
+    public List<Exemplaire>listerExemplaires(boolean enLocation){
+        List<Exemplaire> lex2 = new ArrayList<>();
+        for(Exemplaire ex : lex){
+            if(ex.enLocation()==enLocation) lex2.add(ex);
+        }
+        return lex2;
     }
 }
