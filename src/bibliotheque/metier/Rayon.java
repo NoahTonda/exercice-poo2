@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Rayon implements Comparable<Rayon>{
+public class Rayon {
     private String codeRayon;
     private String genre;
     private List<Exemplaire> lex = new ArrayList<>();
@@ -72,10 +72,4 @@ public class Rayon implements Comparable<Rayon>{
     }
 
 
-    @Override
-    public int compareTo(Rayon o) {
-        if (this.codeRayon.equals(o.codeRayon)) return 0;
-        else if (this.codeRayon.compareTo(o.codeRayon) < 0) return -1;
-        else return 1;
-    }
 }

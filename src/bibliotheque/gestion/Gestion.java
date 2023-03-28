@@ -2,11 +2,13 @@ package bibliotheque.gestion;
 
 import bibliotheque.metier.*;
 import bibliotheque.utilitaires.*;
-import jdk.jshell.execution.Util;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class Gestion {
     Scanner sc = new Scanner(System.in);
@@ -98,62 +100,21 @@ public class Gestion {
     }
 
     private void gestRestitution() {
-        int choix;
-        boolean flag=false;
-        String choix2;
-        List<Location> locations = new ArrayList<>();
-        Scanner sc=new Scanner(System.in);
-        for (Location loc : lloc){
-            if (loc.getDateRestitution()==null){
-                if (locations.isEmpty()||!locations.contains(loc)){
-                    locations.add(loc);
-                }
-            }
-        }
-        if (!locations.isEmpty()){
-            choix = Utilitaire.choixListe(locations);
-            for (Location loc : lloc){
-                if (loc.equals(locations.get(choix-1))&&loc.getDateRestitution()==null){
-                    loc.enregistrerRetour();
-                    do {
-                        System.out.println("changement d'état?(o/n)");
-                        choix2=sc.nextLine();
-                        if (choix2.equals("o")){
-                            System.out.println("Quel est le nouvel état?");
-                            loc.getExemplaire().setDescriptionEtat(sc.nextLine());
-                        }
-                        else if (choix2.equals("n")){
-                            System.out.println("l'exemplaire n'a pas changé d'état");
-                        }
-                        else System.out.println("erreur de saisie");
-                    }while (!choix2.equals("o")&&!choix2.equals("n"));
-                }
-            }
-        }
-        else {
-            System.out.println("aucun exemplaire n'est en location");
-        }
+        //TODO lister exemplaires en location , choisir l'un d'entre eux, enregistrer sa restitution et éventuellement changer état
     }
 
     private void gestLocations() {
         int choix;
-        List<Exemplaire> exemplaires=new ArrayList<>();
-        for (Exemplaire ex : lex){
-            if (!ex.enLocation()){
-                exemplaires.add(ex);
-            }
+        //TODO ne lister que les exemplaires libres et les trier par matricule
+        choix = Utilitaire.choixListe(lex);
+        if(lex.get(choix-1).enLocation()){
+            System.out.println("exemplaire en location");
+            return;
         }
-        if (exemplaires.isEmpty()){
-            System.out.println("aucun exemplaire disponnible");
-        }
-        else{
-            Collections.sort(exemplaires);
-            choix = Utilitaire.choixListe(exemplaires);
-            Exemplaire ex = exemplaires.get(choix-1);
-            choix=Utilitaire.choixListe(llect);
-            Lecteur lec = llect.get(choix-1);
-            lloc.add(new Location(lec,ex));
-        }
+        Exemplaire ex = lex.get(choix-1);
+        choix=Utilitaire.choixListe(llect);
+        Lecteur lec = llect.get(choix-1);
+        lloc.add(new Location(lec,ex));
     }
 
     private void gestLecteurs() {
@@ -183,23 +144,14 @@ public class Gestion {
     }
 
     private void gestRayons() {
-        int choix;
         System.out.println("code ");
         String code=sc.next();
         System.out.println("genre ");
         String genre=sc.next();
         Rayon r = new Rayon(code,genre);
-        lrayon.add(r);
         System.out.println("rayon créé");
-        System.out.println("Quels exemplaires voulez vous mettre dans ce rayon ?");
-        choix = Utilitaire.choixListe(lex);
-        if (lex.get(choix-1).getRayon().equals(r)){
-            System.out.println("Cet exemplaire est déjà dans ce rayon");
-        }
-        else {
-            lex.get(choix-1).setRayon(r);
-        }
 
+        //TODO attribuer exemplaire, les exemplaires sont triés par ordre de titre de l'ouvrage , empêcher doublons sur l'exemplaire
     }
 
     private void gestExemplaires() {
@@ -209,17 +161,14 @@ public class Gestion {
         String etat=sc.next();
         System.out.println("ouvrage ");
         int choix = Utilitaire.choixListe(louv);
-        System.out.println("Dans quel rayon voulez vous mettre cet exemplaire ?");
-        Collections.sort(lrayon);
-        int choix2=Utilitaire.choixListe(lrayon);
-        Exemplaire ex = new Exemplaire(mat,etat,louv.get(choix-1),lrayon.get(choix2-1));
+        Exemplaire ex = new Exemplaire(mat,etat,louv.get(choix-1));
         lex.add(ex);
         System.out.println("exemplaire créé");
+        //TODO attribuer rayon , les rayons sont triès par ordre de code
     }
 
     private void gestOuvrages() {
-        /*
-        Ouvrage o = null;
+      /*  Ouvrage o = null;
         System.out.println("titre");
         String titre= sc.nextLine();
         System.out.println("age minimum");
@@ -257,75 +206,32 @@ public class Gestion {
                             System.out.println("code : ");
                             long code= sc.nextLong();
                             System.out.println("nombre de plages :");
-                            byte nbrePlages= sc.nextByte();
+                            byte nbrePlages= sc.nextByte();sc.skip("\n");
+                            System.out.println("durée en H M S : ");
                             LocalTime dureeTotale = Utilitaire.lecTime();
                             o=new CD(titre,ageMin,dp,ploc,langue,genre,code,nbrePlages,dureeTotale);
                             ;break;
                 case 3 :
                             System.out.println("code : ");
                             code= sc.nextLong();
-                            System.out.println("durée totale :");
                             dureeTotale=Utilitaire.lecTime();
-                    System.out.println("nombre bonus :");
                             byte nbreBonus= sc.nextByte();
                             o=new DVD(titre,ageMin,dp,ploc,langue,genre,code,dureeTotale,nbreBonus);
                             System.out.println("autres langues");
                             List<String> langues = new ArrayList<>(Arrays.asList("anglais","français","italien","allemand","fin"));
                             do{
-                                boolean flag=false;
                                 choix=Utilitaire.choixListe(langues);
                                 if(choix==langues.size())break;
-                                if (((DVD)o).getAutresLangues().isEmpty()){
-                                    if (langues.get(choix-1).equals(langue)){
-                                        System.out.println("il s'agit de la langue d'origine");
-                                    }
-                                    else ((DVD)o).getAutresLangues().add(langues.get(choix-1));
-                                }
-                                else{
-                                    for (String l : ((DVD) o).getAutresLangues()){
-                                        if (langues.get(choix-1).equals(langue)){
-                                            System.out.println("il s'agit de la langue d'origine");
-                                        }
-                                        else if (l.equals(langues.get(choix - 1))) {
-                                            flag = true;
-                                            break;
-                                        }
-                                    }
-                                    if (flag){
-                                        System.out.println("langue déjà séléctionnée");
-                                    }
-                                    else {
-                                        ((DVD)o).getAutresLangues().add(langues.get(choix-1));
-                                    }
-                                }
+                                ((DVD)o).getAutresLangues().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
                             }while(true);
                            System.out.println("sous-titres");
                             do{
-                                boolean flag=false;
-                                choix=Utilitaire.choixListe(langues);
-                                if(choix==langues.size())break;
-                                if (((DVD)o).getSousTitres().isEmpty()){
-                                    ((DVD)o).getSousTitres().add(langues.get(choix-1));
-                                }
-                                else{
-                                    for (String s : ((DVD) o).getSousTitres()){
-                                        if (s.equals(langues.get(choix - 1))) {
-                                            flag = true;
-                                            break;
-                                        }
-                                    }
-                                    if (flag){
-                                        System.out.println("langue déjà séléctionnée");
-                                    }
-                                    else {
-                                        ((DVD)o).getSousTitres().add(langues.get(choix-1));
-                                    }
-                                }
+                             choix=Utilitaire.choixListe(langues);
+                             if(choix==langues.size())break;
+                             ((DVD)o).getSousTitres().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set
                              }while(true);
                             ;break;
-            }
-
-         */
+            }*/
 
 
 
@@ -334,48 +240,16 @@ public class Gestion {
         int choix = Utilitaire.choixListe(lto);
         Ouvrage o = null;
 
-        switch(choix) {
-            case 1:
-                o = new LivreFactoryBeta().create();
-                break;
-            case 2:
-                o = new CDFactoryBeta().create();
-                break;
-            case 3:
-                o = new DVDFactoryBeta().create();
-                break;
-        }
-        /*
+     /*switch(choix) {
+            case 1 : o = new LivreFactoryBeta().create();break;
+            case 2 : o = new CDFactoryBeta().create();break;
+            case 3 : o = new DVDFactoryBeta().create();break;
+        }*/
         List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(),new CDFactory(),new DVDFactory()));
         o = lof.get(choix-1).create();
-        */
-        /*
-        boolean flag;
-        do {
-            flag=false;
-            Collections.sort(laut);
-            int choix2=Utilitaire.choixListe(laut);
-            if (o.getLauteurs().isEmpty()){
-                o.getLauteurs().add(laut.get(choix2-1));
-            }
-            else {
-                for (Auteur auteur : o.getLauteurs()){
-                    if (auteur.equals(laut.get(choix2-1))){
-                        flag=true;
-                    }
-                }
-                if (flag){
-                    System.out.println("l'auteur est déjà inscrit dans cet ouvrage");
-                }
-                else{
-                    o.getLauteurs().add(laut.get(choix2-1));
-                }
-            }
-        }while (!flag);
-
-         */
         louv.add(o);
         System.out.println("ouvrage créé");
+        //TODO attribuer auteurs, les auteur sont triés par odre de nom et prénom, empêcher doublons
     }
 
        private void gestAuteurs() {
@@ -388,6 +262,7 @@ public class Gestion {
         Auteur a  = new Auteur(nom,prenom,nat);
         laut.add(a);
         System.out.println("écrivain créé");
+        //TODO attribuer ouvrages , les ouvrages sont triés par ordre de titre
     }
 
     public static void main(String[] args) {
@@ -396,5 +271,5 @@ public class Gestion {
         g.menu();
     }
 
-
+  
 }

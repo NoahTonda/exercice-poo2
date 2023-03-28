@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Exemplaire implements Comparable<Exemplaire>{
+public class Exemplaire {
 
     private String matricule;
     private String descriptionEtat;
@@ -26,13 +26,6 @@ public class Exemplaire implements Comparable<Exemplaire>{
         this.ouvrage = ouvrage;
 
         this.ouvrage.getLex().add(this);
-    }
-
-    public Exemplaire(String matricule, String descriptionEtat, Ouvrage ouvrage, Rayon rayon) {
-        this.matricule = matricule;
-        this.descriptionEtat = descriptionEtat;
-        this.ouvrage = ouvrage;
-        this.rayon = rayon;
     }
 
     @Override
@@ -113,7 +106,7 @@ public class Exemplaire implements Comparable<Exemplaire>{
     public List<Lecteur> lecteurs(){
         List<Lecteur> ll = new ArrayList<>();
         for(Location l : lloc){
-            if(ll.contains(l)) continue; //par la suite utiliser set
+            if(ll.contains(l.getLoueur())) continue; //par la suite utiliser set
             ll.add(l.getLoueur());
         }
         return null;
@@ -159,10 +152,5 @@ public class Exemplaire implements Comparable<Exemplaire>{
     }
 
 
-    @Override
-    public int compareTo(Exemplaire o) {
-        if (this.matricule.equals(o.matricule)) return 0;
-        else if (this.matricule.compareTo(o.matricule)<0) return -1;
-        else return 1;
-    }
+
 }

@@ -32,65 +32,22 @@ public class DVDFactoryBeta {
         //détails propres à la classe DVD
         System.out.println("code : ");
         long code= sc.nextLong();
-        System.out.println("durée totale :");
         LocalTime dureeTotale=Utilitaire.lecTime();
-        System.out.println("nombre bonus :");
         byte nbreBonus= sc.nextByte();
         DVD dvd =new DVD(titre,ageMin,dp,ploc,langue,genre,code,dureeTotale,nbreBonus);
         System.out.println("autres langues");
         List<String> langues = new ArrayList<>(Arrays.asList("anglais","français","italien","allemand","fin"));
         int choix;
         do{
-            boolean flag=false;
             choix=Utilitaire.choixListe(langues);
             if(choix==langues.size())break;
-            if (dvd.getAutresLangues().isEmpty()){
-                if (langues.get(choix-1).equals(langue)){
-                    System.out.println("il s'agit de la langue d'origine");
-                }
-                else dvd.getAutresLangues().add(langues.get(choix-1));
-
-            }
-            else{
-                for (String l : dvd.getAutresLangues()){
-                    if (langues.get(choix-1).equals(langue)){
-                        System.out.println("il s'agit de la langue d'origine");
-                    }
-                    else if (l.equals(langues.get(choix - 1))) {
-                        flag = true;
-                        break;
-                    }
-                }
-                if (flag){
-                    System.out.println("langue déjà séléctionnée");
-                }
-                else {
-                    dvd.getAutresLangues().add(langues.get(choix-1));
-                }
-            }
+            dvd.getAutresLangues().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
         }while(true);
         System.out.println("sous-titres");
         do{
-            boolean flag=false;
             choix=Utilitaire.choixListe(langues);
             if(choix==langues.size())break;
-            if (dvd.getSousTitres().isEmpty()){
-                dvd.getSousTitres().add(langues.get(choix-1));
-            }
-            else{
-                for (String s : dvd.getSousTitres()){
-                    if (s.equals(langues.get(choix - 1))) {
-                        flag = true;
-                        break;
-                    }
-                }
-                if (flag){
-                    System.out.println("langue déjà séléctionnée");
-                }
-                else {
-                    dvd.getSousTitres().add(langues.get(choix-1));
-                }
-            }
+            dvd.getSousTitres().add(langues.get(choix-1));//TODO vérifier unicité ou utiliser set
         }while(true);
         return dvd;
     }
