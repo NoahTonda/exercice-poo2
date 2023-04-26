@@ -81,7 +81,7 @@ public class Gestion {
         lloc.add(loc);
     }
 
-    private void menu() {
+    private void menu() throws Exception {
         List options = new ArrayList<>(Arrays.asList("auteurs","ouvrages","exemplaires","rayons","lecteurs","locations","restitution","fin"));
       do{
         int choix = Utilitaire.choixListe(options);
@@ -167,7 +167,7 @@ public class Gestion {
         //TODO attribuer rayon , les rayons sont triès par ordre de code
     }
 
-    private void gestOuvrages() {
+    private void gestOuvrages() throws Exception {
       /*  Ouvrage o = null;
         System.out.println("titre");
         String titre= sc.nextLine();
@@ -265,7 +265,7 @@ public class Gestion {
         //TODO attribuer ouvrages , les ouvrages sont triés par ordre de titre
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Gestion g = new Gestion();
         g.populate();
         g.menu();
